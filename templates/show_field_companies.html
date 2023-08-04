@@ -1,0 +1,43 @@
+[[extend 'layout.html']]
+
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div class="section" id="vue-target2" v-cloak>
+
+    <div class="container block">
+        <h1 class="title">
+            <div style="text-align: center">
+                [[=field_name]] Companies
+            </div>
+        </h1>
+
+        <button>
+            <a class="block" href="[[=URL('index')]]">
+                <span class="secondary button" style="color: white; font-size: 1.3em;">Home Page</span>
+            </a>
+        </button>
+        <button>
+            <a class="block" @click="get_companies('[[=field_name]]')">
+                <span class="secondary button" style="color: white; font-size: 1.3em;">Reload Companies</span>
+            </a>
+        </button>
+
+        <div v-for="c in companies" style="text-align: center;">
+            <button class="secondary" style="color: white; font-size: 1.1em; display: inline-block; width: 25% " @click="go_to_comments(c, '[[=field_name]]')">{{ c }}</button>
+        </div>
+    </div>
+
+</div>
+
+[[block page_scripts]]
+<script>
+    let get_companies_url = "[[=XML(get_companies_url)]]";
+    let get_comments_url_url = "[[=XML(get_comments_url_url)]]";
+    let field_name = "[[=field_name]]";
+</script>
+<script src="js/companies.js"></script>
+[[end]]

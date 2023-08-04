@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" prefers-color-scheme="dark">
+  <head>
+    <base href="[[=URL('static')]]/">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAAQEAAAEAIAAwAAAAFgAAACgAAAABAAAAAgAAAAEAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAA=="/>
+    <link rel="stylesheet" href="picocss/pico.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+    [[block page_head]]<!-- individual pages can customize header here -->[[end]]
+  </head>
+  <body>
+    <!-- Navigation bar -->
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="[[=URL('index')]]">
+          <!-- <img class="logo" width="150" src="images/site_icon.png"> -->
+        </a>
+      </div>
+
+      <div id="the-navbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          [[block page_menu_items]]<!-- individual pages can add menu items here -->[[end]]
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+              <div class="buttons">
+                  [[if globals().get('user'):]]
+                  <nav>
+                      <ul>
+                      </ul>
+                      <ul>
+                          <li>
+                              <details role="list" dir="rtl">
+                                  <summary class="fa fa-user" aria-haspopup="listbox" role="link"></summary>
+                                  <ul role="listbox">
+                                      [[=globals().get('user').get('username')]]
+                                      <li>
+                                          <a class="navbar-item" href="[[=URL('auth/profile')]]">
+                                              <span class="icon is-small">
+                                                  Profile
+                                              </span>
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a class="navbar-item" href="[[=URL('auth/logout')]]">
+                                              <span>Log out</span>
+                                          </a>
+                                      </li>
+                                      <li>
+                                          <a class="navbar-item" href="[[=URL('auth/change_password')]]">
+                                              <span>Change Password</span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </details>
+                          </li>
+                      </ul>
+                  </nav>
+                  [[else:]]
+                  <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
+                  <a class="button is-success" href="[[=URL('auth/login')]]">Log in</a>
+                  [[pass]]
+              </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- beginning of HTML inserted by extending template -->
+    [[include]]
+    <!-- end of HTML inserted by extending template -->
+  </body>
+  <script src="js/sugar.min.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/vue.js"></script>
+  <script src="js/utils.js"></script>
+  [[block page_scripts]]<!-- individual pages can add scripts here -->[[end]]
+</html>

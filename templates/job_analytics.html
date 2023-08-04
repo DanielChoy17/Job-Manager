@@ -1,0 +1,112 @@
+[[extend 'layout.html']]
+
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div class="section" id="vue-target4" v-cloak>
+<div class="section">
+    <!-- Title -->
+    <div class="container block">
+        <h1 class="title">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                <h1 style="font-size: 1.1em; margin-bottom: 0px;">Job Analytics</h1>
+                <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 0.7em;">
+                        Field: [[=field_name]]
+                    </span>
+                </div>
+            </div>
+        </h1>
+
+        <a class="block" href="[[=URL('index')]]">
+            <button>
+                <span class="secondary button" style="color: white; font-size: 1.1em; width: 25%">Home Page</span>
+            </button>
+        </a>
+
+        <!-- STATS: Average Salary -->
+        <!-- Calculates the Average Salary of this Job's Field -->
+        <div style="text-align: center">
+            <button class="primary" @click="salary_avg();">
+                <div v-if="!avg_salary">
+                    Average Salary of Similar Jobs
+                </div>
+                <div v-if="avg_salary" >
+                    <span>The average salary in {{sector}} is ${{avg_salary}}</span>
+                </div>
+            </button>
+        </div> 
+
+        <!-- STATS: Similar Jobs -->
+        <!-- Button to find Similar Jobs -->
+        <button class="primary" style="text-align: center;" @click="similar_jobs()">
+            <div>
+                Find Similar Jobs
+            </div>
+        </button>
+
+        <!-- STATS: Response Rate -->
+        <!-- Button to see time to hear back -->
+        <button class="primary" style="text-align: center;" @click="response_time()">
+            <div v-if="!time_response">
+                Average Response Rate
+            </div>
+            <div v-if="time_response" >
+                <span>The Average Response Rate is {{time_response}}</span>
+            </div>
+        </button>
+
+        <!-- List the Similar Jobs -->
+        <div v-if="sim_jobs.length > 0 & listHidden">
+            <table class="container" style="margin-bottom: 10px" >
+                <thead>
+                    <tr>
+                        <th scope="col"><b>Company</b></th>
+                        <th scope="col"><b>Role</b></th>
+                        <th scope="col"><b>Apply Here</b></th>
+                    </tr>
+                </thead>
+                <tbody v-for="s in sim_jobs">
+                    <tr>
+                        <td>{{s.company}}</td>
+                        <td>{{s.title}}</td>
+                        <td>{{s.URL}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px"></div>
+
+    
+
+
+   
+
+</div>
+</div>
+
+
+[[block page_scripts]]
+<!-- Loads the index-specific js for Vue -->
+<script>
+    // Update the time entered
+    function updateTimeEntered() {
+        const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+        document.getElementById("time-entered").textContent = "Average Response Rate: " + currentTime;
+    }
+    updateTimeEntered();
+</script>
+<script>
+    let load_jobs_url = "[[=XML(load_jobs_url)]]";
+    let salary_avg_url = "[[=XML(salary_avg_url)]]";
+	let similar_jobs_url = "[[=XML(similar_jobs_url)]]";
+    let field_name = "[[=field_name]]";
+    let response_time_url = "[[=XML(response_time_url)]]";
+</script>
+<script src="js/analytics.js"></script>
+[[end]]

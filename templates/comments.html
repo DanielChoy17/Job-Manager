@@ -1,0 +1,70 @@
+[[extend 'layout.html']]
+
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div class="container block" id="vue-target3" v-cloak>
+
+    <div class="section" style="text-align: center;">
+        <h1 style="font-size: 3em;">[[=company_name]] User Comments Area</h1>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <button class="secondary" style="width: fit-content; margin-right: 10px;">
+            <a class="block" href="[[=URL('index')]]">
+                <span class="button" style="color: white; font-size: 1.3em;">Home Page</span>
+            </a>
+        </button>
+        <button class="secondary" style="width: fit-content; margin-left: 10px; margin-right: 10px">
+            <a class="block" @click="get_back_url('[[=field_name]]')">
+                <span class="button" style="color: white; font-size: 1.3em;">Back to List of Companies</span>
+            </a>
+        </button>
+        <button  class="secondary"style="width: fit-content; margin-left: 10px;">
+            <a class="block" @click="get_comments('[[=company_name]]')">
+                <span class="button" style="color: white; font-size: 1.3em;">Reload Comments</span>
+            </a>
+        </button>
+    </div>
+    
+    <div class="field">
+        <textarea class="textarea" placeholder="Comment about this company." rows="2" v-model="comment_query"></textarea>
+    </div>
+    <div class="field">
+        <div class="control"><button class="secondary" @click="publish('[[=company_name]]')" class="button is-link">Publish!</button></div>
+    </div>
+
+    <div v-for="c in comments" class="box">
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <a class="level-item" aria-label="reply">
+              <span class="icon is-small">
+                <i class="fa fa-user"></i>
+              </span>
+              <span class="ml-2">{{c.name}}</span>
+            </a>
+          </div>
+          <div class="level-right">
+            <span class="level-item">
+              {{c.timestamp}}
+            </span>
+          </div>
+        </nav>
+        <div class="content">
+          {{c.content}} 
+        </div>
+    </div> 
+</div>
+
+[[block page_scripts]]
+<script>
+    let publish_url = "[[=XML(publish_url)]]";
+    let get_comments_url = "[[=XML(get_comments_url)]]";
+    let get_back_url_url = "[[=XML(get_back_url_url)]]";
+    let company_name = "[[=company_name]]"
+</script>
+<script src="js/comments.js"></script>
+[[end]]
